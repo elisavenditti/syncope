@@ -47,7 +47,7 @@ import org.apache.syncope.common.rest.api.service.SAML2IdPEntityService;
 import org.apache.syncope.common.rest.api.service.SAML2SP4UIIdPService;
 import org.apache.syncope.common.rest.api.service.SRARouteService;
 import org.apache.syncope.common.rest.api.service.UserService;
-import org.apache.syncope.fit.sra.AbstractSRAITCase;
+//import org.apache.syncope.fit.sra.AbstractSRAITCase;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.FormElement;
@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
 
 public class AbstractITCase {
 
-    protected static final Logger LOG = LoggerFactory.getLogger(AbstractSRAITCase.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(AbstractITCase.class);
 
     protected static final String ADMIN_UNAME = "admin";
 
