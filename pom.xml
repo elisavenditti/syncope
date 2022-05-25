@@ -2836,6 +2836,7 @@ under the License.
     </profile>
     <profile>
       <id>JaCoCo-coverage</id>
+      <properties> <checkstyle.skip>true</checkstyle.skip> </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
@@ -2869,6 +2870,7 @@ under the License.
     <module>archetype</module>
     <module>standalone</module>
     <module>reportJacoco</module>
+    <module>prova</module>
   </modules>
 
 </project>
