@@ -388,6 +388,18 @@ under the License.
   </contributors>
 
   <properties>
+
+    <!--Jacoco & sonarcloud-->
+
+    <sonar.coverage.jacoco.xmlReportPaths>../reportJacoco/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.organization>elisavenditti</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+    <!--da togliere-->
+    <sonar.internal.analysis.dbd>false</sonar.internal.analysis.dbd>
+
+
+
     <project.build.outputTimestamp>2021-07-16T09:00:00Z</project.build.outputTimestamp>
     <syncope.version>${project.version}</syncope.version>
 
@@ -2246,7 +2258,7 @@ under the License.
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.7</version>
+          <version>0.8.6</version>
         </plugin>
 
         <plugin>
@@ -2822,6 +2834,28 @@ under the License.
         <argLine>-Xms512m -Xmx1024m -Xss256k --add-opens java.base/java.net=ALL-UNNAMED</argLine>
       </properties>
     </profile>
+    <profile>
+      <id>JaCoCo-coverage</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
   <modules>
@@ -2834,6 +2868,7 @@ under the License.
     <module>ext</module>
     <module>archetype</module>
     <module>standalone</module>
+    <module>reportJacoco</module>
   </modules>
 
 </project>
