@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.syncope</groupId>
-            <artifactId>syncope-client</artifactId>
+            <artifactId>syncope-core</artifactId>
             <version>3.0.0-SNAPSHOT</version>
             <type>pom</type>
         </dependency>

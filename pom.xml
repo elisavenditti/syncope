@@ -528,7 +528,7 @@ under the License.
     <jdbc.oracle.version>21.5.0.0</jdbc.oracle.version>
 
     <conf.directory>${project.build.directory}/test-classes</conf.directory>
-    <bundles.directory>${project.build.directory}/bundles</bundles.directory>
+    <bundles.directory>${project.build.directory}\bundles</bundles.directory>
     <connid.location>file:${bundles.directory}/</connid.location>
     <log.directory>${project.build.directory}/log</log.directory>
 
@@ -544,7 +544,7 @@ under the License.
     Surefire plugin argLine can be defined as a Maven property to avoid JVM errors on startup with no jacaco-maven-plugin
     https://www.eclemma.org/jacoco/trunk/doc/prepare-agent-mojo.html
     -->
-    <argLine>-Xms512m -Xmx1024m -Xss256k</argLine>
+<!--    <argLine>-Xms512m -Xmx1024m -Xss256k</argLine>-->
 
     <ianal.phase>verify</ianal.phase>
     <sass.skip>false</sass.skip>
@@ -552,9 +552,9 @@ under the License.
 
     <sonar.language>java</sonar.language>
     <sonar.java.source>${targetJdk}</sonar.java.source>
-    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+<!--    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>-->
     <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
-    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+<!--    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
 
     <targetJdk>11</targetJdk>
     <rootpom.basedir>${basedir}</rootpom.basedir>
@@ -564,6 +564,11 @@ under the License.
   <dependencyManagement>
 
     <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
       <dependency>
         <groupId>jakarta.validation</groupId>
         <artifactId>jakarta.jakarta.validation-api</artifactId>
@@ -1138,12 +1143,6 @@ under the License.
         <groupId>org.apache.directory.server</groupId>
         <artifactId>apacheds-core-annotations</artifactId>
         <version>${apacheds.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.directory.server</groupId>
@@ -1166,12 +1165,6 @@ under the License.
         <groupId>com.icegreen</groupId>
         <artifactId>greenmail</artifactId>
         <version>1.6.7</version>
-        <exclusions>
-          <exclusion>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
 
       <dependency>
@@ -2179,16 +2172,7 @@ under the License.
           </configuration>
         </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
-          <configuration>
-            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <encoding>utf-8</encoding>
-            <runOrder>alphabetical</runOrder>
-          </configuration>
-        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
@@ -2270,6 +2254,25 @@ under the License.
     </pluginManagement>
 
     <plugins>
+      <!--spostato da pluginmanagement-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <forkCount>${forkCount.variable}</forkCount>
+          <reuseForks>false</reuseForks>
+          <trimStackTrace>false</trimStackTrace>
+          <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+          <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
+        </configuration>
+        <!--<configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <encoding>utf-8</encoding>
+          <runOrder>alphabetical</runOrder>
+        </configuration>-->
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -2327,29 +2330,6 @@ under the License.
             <phase>verify</phase>
             <goals>
               <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <configuration>
-          <skip>${skipTests}</skip>
-        </configuration>
-        <executions>
-          <execution>
-            <id>prepare-jacoco-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>generate-code-coverage-report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
             </goals>
           </execution>
         </executions>
@@ -2788,7 +2768,9 @@ under the License.
 
     <profile>
       <id>skipTests</id>
-
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
       <properties>
         <skipTests>true</skipTests>
         <ianal.phase>none</ianal.phase>
@@ -2836,7 +2818,9 @@ under the License.
     </profile>
     <profile>
       <id>JaCoCo-coverage</id>
-      <properties> <checkstyle.skip>true</checkstyle.skip> </properties>
+      <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+      </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
