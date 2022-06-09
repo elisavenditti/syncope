@@ -2854,7 +2854,6 @@ under the License.
     <module>archetype</module>
     <module>standalone</module>
     <module>reportJacoco</module>
-    <module>prova</module>
   </modules>
 
 </project>
