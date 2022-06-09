@@ -260,25 +260,25 @@ under the License.
           </systemPropertyVariables>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <inherited>true</inherited>
-        <configuration>
-          <systemPropertyVariables>
-            <jaxrsContentType>${jaxrs.content.type}</jaxrsContentType>
-            <obscureSecretKey>${obscureSecretKey}</obscureSecretKey>
-          </systemPropertyVariables>
-        </configuration>
-        <executions>
-          <execution>
-            <id>verify</id>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--        <inherited>true</inherited>-->
+<!--        <configuration>-->
+<!--          <systemPropertyVariables>-->
+<!--            <jaxrsContentType>${jaxrs.content.type}</jaxrsContentType>-->
+<!--            <obscureSecretKey>${obscureSecretKey}</obscureSecretKey>-->
+<!--          </systemPropertyVariables>-->
+<!--        </configuration>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>verify</id>-->
+<!--            <goals>-->
+<!--              <goal>verify</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
 
 <!--      <plugin>-->
 <!--        <groupId>org.codehaus.cargo</groupId>-->
@@ -420,7 +420,10 @@ under the License.
   <profiles>
     <profile>
       <id>zookeeper-it</id>
-
+      <!--added-->
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
       <properties>
         <spring.profiles.active>embedded,zookeeper</spring.profiles.active>
       </properties>

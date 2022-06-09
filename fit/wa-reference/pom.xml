@@ -236,22 +236,22 @@ under the License.
           <argLine>-Djavax.net.ssl.trustStore=${basedir}/src/test/resources/keystore.jks -Djavax.net.ssl.trustStorePassword=password</argLine>          
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <inherited>true</inherited>
-        <configuration>
-          <argLine>-Djavax.net.ssl.trustStore=${basedir}/src/test/resources/keystore.jks -Djavax.net.ssl.trustStorePassword=password</argLine>          
-        </configuration>
-        <executions>
-          <execution>
-            <id>verify</id>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--        <inherited>true</inherited>-->
+<!--        <configuration>-->
+<!--          <argLine>-Djavax.net.ssl.trustStore=${basedir}/src/test/resources/keystore.jks -Djavax.net.ssl.trustStorePassword=password</argLine>          -->
+<!--        </configuration>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>verify</id>-->
+<!--            <goals>-->
+<!--              <goal>verify</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
