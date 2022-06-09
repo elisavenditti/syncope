@@ -2817,7 +2817,7 @@ under the License.
       </properties>
     </profile>
     <profile>
-      <id>JaCoCo-coverage</id>
+      <id>jacococoverage</id>
       <properties>
         <checkstyle.skip>true</checkstyle.skip>
       </properties>
