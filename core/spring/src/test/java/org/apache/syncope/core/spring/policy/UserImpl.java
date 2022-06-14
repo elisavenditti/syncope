@@ -1,4 +1,4 @@
-package org.apache.syncope.core.spring.security;
+package org.apache.syncope.core.spring.policy;
 
 import org.apache.syncope.common.keymaster.client.api.ConfParamOps;
 import org.apache.syncope.common.lib.types.CipherAlgorithm;
@@ -7,13 +7,13 @@ import org.apache.syncope.core.persistence.api.entity.*;
 import org.apache.syncope.core.persistence.api.entity.resource.ExternalResource;
 import org.apache.syncope.core.persistence.api.entity.user.*;
 import org.apache.syncope.core.spring.ApplicationContextProvider;
+import org.apache.syncope.core.spring.security.Encryptor;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static org.apache.syncope.core.spring.security.AuthDataAccessor.ENCRYPTOR;
 
 public class UserImpl implements User {
 
@@ -268,7 +268,7 @@ public class UserImpl implements User {
                 this.clearPassword = password;
 
                 try {
-                        this.password = ENCRYPTOR.encode(password, CipherAlgorithm.AES);
+                        this.password = Encryptor.getInstance().encode(password, CipherAlgorithm.AES);
                         setMustChangePassword(false);
                 } catch (Exception e) {
                         System.out.println("Could not encode password "+ e.getMessage());

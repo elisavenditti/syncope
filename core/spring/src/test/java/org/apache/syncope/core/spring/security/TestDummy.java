@@ -3,7 +3,7 @@ package org.apache.syncope.core.spring.security;
 import org.apache.syncope.common.lib.policy.DefaultPasswordRuleConf;
 import org.apache.syncope.common.lib.types.CipherAlgorithm;
 import org.apache.syncope.core.spring.policy.DefaultPasswordRule;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;//jupiter.api.Test;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -12,7 +12,9 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
+
+//import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestDummy {
 

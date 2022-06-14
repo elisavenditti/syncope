@@ -31,8 +31,8 @@
 
         <!-- tested module's dependency -->
         <dependency>
-            <groupId>org.apache.syncope</groupId>
-            <artifactId>syncope-core</artifactId>
+            <groupId>org.apache.syncope.core</groupId>
+            <artifactId>syncope-core-spring</artifactId>
             <version>3.0.0-SNAPSHOT</version>
             <type>pom</type>
         </dependency>
