@@ -49,10 +49,41 @@ public class TestDefaultPasswordGeneratorCheck extends TestCase {
         conf7.setMustntStartWithAlpha(true);
 
 
+        DefaultPasswordRuleConf conf8 = new DefaultPasswordRuleConf();
+        conf8.setMustStartWithAlpha(true);
+        conf8.setMustStartWithDigit(true);
+
+        DefaultPasswordRuleConf conf9 = new DefaultPasswordRuleConf();
+        conf9.setMustStartWithAlpha(true);
+        conf9.setMustStartWithDigit(false);
+
+        DefaultPasswordRuleConf conf10 = new DefaultPasswordRuleConf();
+        conf10.setMustEndWithNonAlpha(true);
+        conf10.setMustntEndWithNonAlpha(true);
+
+        DefaultPasswordRuleConf conf11 = new DefaultPasswordRuleConf();
+        conf11.setMustEndWithNonAlpha(true);
+        conf11.setMustntEndWithNonAlpha(false);
+
 
         return Arrays.asList(new Object[][]{
-                {null, false}, {conf, true}, {conf2, false}, {conf3, true},
-                {conf4, true}, {conf5, false}, {conf6, false}, {conf7, false}
+                // Prima iterazione: jacoco
+                {null, false},
+                {conf, true},
+                {conf2, false},
+
+                // Seconda iterazione: jacoco
+                {conf3, true},
+                {conf4, true},
+                {conf5, false},
+                {conf6, false},
+                {conf7, false},
+
+                //Terza iterazione: badua
+                {conf8, false},
+                {conf9, true},
+                {conf10, false},
+                {conf11, true}
         });
     }
 

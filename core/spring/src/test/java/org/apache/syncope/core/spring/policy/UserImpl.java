@@ -256,8 +256,7 @@ public class UserImpl implements User {
 
         @Override
         public void setEncodedPassword(final String password, final CipherAlgorithm cipherAlgorithm) {
-                this.clearPassword = null;
-
+                //this.clearPassword = null;
                 this.password = password;
                 this.cipherAlgorithm = cipherAlgorithm;
                 setMustChangePassword(false);

@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import junit.framework.TestCase;
-import org.junit.Test;//.jupiter.api.Test;
+import org.junit.Test;
 import java.util.*;
 
 @RunWith(Parameterized.class)
@@ -19,9 +19,22 @@ public class TestDefaultPasswordRule extends TestCase {
 
 
         return Arrays.asList(new Object[][]{
-                {"nullPwdUser", null}, {"nullPwdUser", null}, {"validPwdUser", "AAAAAAAAAA"},
-                {"invalidPwdUser","AAAAAAAAA1"}, {null, "1234"}, {null, "AAAAAAAAAA"}, {"usernameAA", "usernameAA"},
-                {"username", "passwordAA"},{"123456789AAA", null}, {null, null}, {"123456789AAA", "username"}
+                {"nullUser", null},             // per come l'ho implementato username="null" indica di mettere l'istanza a null
+                {"nullPwdUser", null},
+                {"validPwdUser", "AAAAAAAAAA"},
+                {"invalidPwdUser","AAAAAAAAA1"},
+
+                // Prima iterazione: jacoco
+                {null, "1234"},
+                {null, "AAAAAAAAAA"},
+                {"usernameAA", "usernameAA"},
+
+                // Seconda iterazione: jacoco
+                {"username", "passwordAA"},
+                {"123456789AAA", null},
+                {null, null},
+                {"123456789AAA", "username"},
+
         });
     }
 
@@ -32,12 +45,17 @@ public class TestDefaultPasswordRule extends TestCase {
     public TestDefaultPasswordRule(String username, String password){
 
         // method params configuration
-        User user = new UserImpl();
-        user.setCipherAlgorithm(CipherAlgorithm.AES);
-        user.setUsername(username);
-        user.setPassword(password);
+        User user;
+        if(username!=null && username.equalsIgnoreCase("nullUser")) {
+            user=null;
+        }
+        else {
+            user = new UserImpl();
+            user.setCipherAlgorithm(CipherAlgorithm.AES);
+            user.setUsername(username);
+            user.setPassword(password);
+        }
         this.firstParam = user;
-
         // SUT configuration
         configure();
 
@@ -57,9 +75,9 @@ public class TestDefaultPasswordRule extends TestCase {
     }
 
 
-    private boolean isValid(String password, String username){
+    public static boolean isValid(String password, String username, DefaultPasswordRuleConf conf){
         boolean valid = true;
-        DefaultPasswordRuleConf conf = (DefaultPasswordRuleConf) this.defaultPasswordRule.getConf();
+
         int max = conf.getMaxLength();
         int min = conf.getMinLength();
         int len = password.length();
@@ -76,16 +94,31 @@ public class TestDefaultPasswordRule extends TestCase {
         }
 
         if(conf.isMustntEndWithDigit() && Character.isDigit(password.charAt(len-1))){
+
             valid = false;
             return valid;
         }
+        // se deve finire con un NON ALPHA ma l'ultimo carattere è alpha la password è invalida
+        if(conf.isMustEndWithNonAlpha() && Character.isAlphabetic(password.charAt(len-1))){
+            valid = false;
+            return valid;
+        }
+        // se NON deve finire con un NON ALPHA ma l'ultimo carattere non è alpha la password è invalida
+        if(conf.isMustntEndWithNonAlpha() && !Character.isAlphabetic(password.charAt(len-1))){
+            valid = false;
+            return valid;
+        }
+        int alphaNumCount=0;
         if(conf.isAlphanumericRequired()){
             for(int i=0; i<len; i++){
                 char c = password.charAt(i);
-                if(!(Character.isAlphabetic(c) || Character.isDigit(c))){
-                    valid = false;
-                    return valid;
+                if((Character.isAlphabetic(c) || Character.isDigit(c))){
+                    alphaNumCount++;
                 }
+            }
+            if(alphaNumCount==0){
+                valid = false;
+                return valid;
             }
         }
 
@@ -104,7 +137,7 @@ public class TestDefaultPasswordRule extends TestCase {
             String pwd = this.firstParam.getClearPassword();
             String username = this.firstParam.getUsername();
 
-            if (pwd == null || isValid(pwd, username))
+            if (pwd == null || isValid(pwd, username, (DefaultPasswordRuleConf) this.defaultPasswordRule.getConf()))
                 expectedCode = 0;
             else
                 expectedCode = -2;
